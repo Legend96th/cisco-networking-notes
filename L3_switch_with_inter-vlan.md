@@ -1,9 +1,3 @@
-createdAt: "2018-09-09T09:06:19.802Z"
-updatedAt: "2019-02-06T19:53:17.194Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "L3 switch with inter-vlan"
-content: '''
   # L3 switch with inter-vlan
   
   * Layer 3
@@ -68,6 +62,3 @@ content: '''
   
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

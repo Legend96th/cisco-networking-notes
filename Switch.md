@@ -1,9 +1,3 @@
-createdAt: "2018-09-04T10:14:12.092Z"
-updatedAt: "2019-02-02T21:03:37.769Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Switch"
-content: '''
   # Switch
   
   * Link aggregation: active/backup
@@ -114,6 +108,3 @@ content: '''
   
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

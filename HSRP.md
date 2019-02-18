@@ -1,9 +1,3 @@
-createdAt: "2018-09-12T09:15:01.347Z"
-updatedAt: "2018-09-12T20:49:14.513Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "HSRP"
-content: '''
   # HSRP
   Hot Standby Router Protocol
   created by cisco
@@ -24,9 +18,3 @@ content: '''
   
   
   
-'''
-tags: [
-  "CISCO"
-]
-isStarred: false
-isTrashed: false

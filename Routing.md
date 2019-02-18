@@ -1,9 +1,3 @@
-createdAt: "2018-09-04T08:25:54.450Z"
-updatedAt: "2019-02-11T11:26:03.674Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Routing"
-content: '''
   
   # Routing
   
@@ -174,6 +168,3 @@ content: '''
     * A router that has been configured to forward DHCP discover messages to a specefic destination IP address or specefic destination network
   * The bandwidth of an interface **has to be set correctly** for some calculations (QoS HWQ size for eg)
 '''
-tags: []
-isStarred: false
-isTrashed: false

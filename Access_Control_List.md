@@ -1,9 +1,3 @@
-createdAt: "2018-09-05T10:24:31.782Z"
-updatedAt: "2018-09-05T10:55:29.793Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Access Control List"
-content: '''
   # Access Control List
   
   * Named
@@ -35,6 +29,3 @@ content: '''
   
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

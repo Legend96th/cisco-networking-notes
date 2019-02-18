@@ -1,9 +1,3 @@
-createdAt: "2018-09-12T10:28:43.470Z"
-updatedAt: "2018-09-12T20:49:04.057Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "VPN"
-content: '''
   # VPN
   Virtual Private Network
   
@@ -84,9 +78,3 @@ content: '''
   Router(config-if)#tunnel destination 11.0.0.2
   ```
   * Add routing on the tunnels (without passing by the middle network)
-'''
-tags: [
-  "CISCO"
-]
-isStarred: false
-isTrashed: false

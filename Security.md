@@ -1,9 +1,3 @@
-createdAt: "2018-09-04T14:06:23.617Z"
-updatedAt: "2018-12-20T10:24:37.523Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Security"
-content: '''
   # Security
   
   * Tools
@@ -39,6 +33,3 @@ content: '''
   
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

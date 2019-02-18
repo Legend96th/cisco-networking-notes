@@ -1,9 +1,3 @@
-createdAt: "2018-08-26T07:48:29.914Z"
-updatedAt: "2018-12-23T17:50:23.405Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "IPV6"
-content: '''
    # IPV6  
   
   *APIPA (self assigned address)*
@@ -191,6 +185,3 @@ content: '''
     * (conf-inf) ipv6 ospf 1 area 0 
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

@@ -1,9 +1,3 @@
-createdAt: "2018-09-04T09:55:28.764Z"
-updatedAt: "2019-01-25T21:48:27.489Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "VLANs"
-content: '''
   # VLANs
   
   Virtual Local Area Network
@@ -187,6 +181,3 @@ content: '''
   
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

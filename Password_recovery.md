@@ -1,9 +1,3 @@
-createdAt: "2018-09-09T10:05:49.520Z"
-updatedAt: "2019-01-24T10:09:01.205Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Password recovery"
-content: '''
   # Password recovery
   
   To perform a password recovery we must alter the normal boot procedure 
@@ -85,6 +79,3 @@ content: '''
   0x2102: normal boot from flash
   0x2142: bypass NVRAM boot
 '''
-tags: []
-isStarred: false
-isTrashed: false

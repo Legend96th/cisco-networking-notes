@@ -1,9 +1,3 @@
-createdAt: "2018-09-10T13:08:36.218Z"
-updatedAt: "2019-02-01T20:18:10.122Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "STP"
-content: '''
   # STP
   Spanning Tree Protocol
   
@@ -245,6 +239,3 @@ content: '''
   Switch(config-if)#spanning-tree portfast
   ```
 '''
-tags: []
-isStarred: false
-isTrashed: false

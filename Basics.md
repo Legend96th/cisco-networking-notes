@@ -1,9 +1,3 @@
-createdAt: "2018-09-02T08:56:32.264Z"
-updatedAt: "2019-01-02T19:23:38.614Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Basics"
-content: '''
   # Basics
   ---
   
@@ -284,9 +278,3 @@ content: '''
   
   
 '''
-tags: [
-  "CISCO"
-  "ICND1"
-]
-isStarred: false
-isTrashed: false

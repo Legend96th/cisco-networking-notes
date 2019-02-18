@@ -1,9 +1,3 @@
-createdAt: "2018-09-11T13:40:40.432Z"
-updatedAt: "2018-09-11T14:18:22.324Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "SNMP/NetFlow/SPAN/DHCP"
-content: '''
   # SNMP/NetFlow/SPAN/DHCP
   
   # SNMP
@@ -40,6 +34,3 @@ content: '''
   # DAI 
   Dynamic ARP inspection
 '''
-tags: []
-isStarred: false
-isTrashed: false

@@ -1,9 +1,3 @@
-createdAt: "2018-11-30T21:20:58.484Z"
-updatedAt: "2018-11-30T21:29:11.648Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "DNS"
-content: '''
   # DNS
   
   Types of DNS records
@@ -22,6 +16,3 @@ content: '''
   
   Uses a software to automatically update the DNS record
 '''
-tags: []
-isStarred: false
-isTrashed: false

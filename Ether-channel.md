@@ -1,9 +1,3 @@
-createdAt: "2018-09-10T14:09:48.929Z"
-updatedAt: "2019-02-03T17:50:58.682Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Ether-channel"
-content: '''
   # Ether-channel
   
   Groups multiple ports to form one logical port that sums the physical ones thus getting a sum of of the speed
@@ -123,9 +117,3 @@ content: '''
     src-ip       Src IP Addr
     src-mac      Src Mac Addr
   ```
-'''
-tags: [
-  "CISCO"
-]
-isStarred: false
-isTrashed: false

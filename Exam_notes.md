@@ -1,9 +1,3 @@
-createdAt: "2018-09-02T09:32:00.037Z"
-updatedAt: "2018-12-06T22:30:18.598Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Exam notes"
-content: '''
   # Exam notes 
   
   ***_NO TABS ALLOWED_***
@@ -80,10 +74,3 @@ content: '''
   
   
 '''
-tags: [
-  "CISCO"
-  "ICND1"
-  "ICND2"
-]
-isStarred: false
-isTrashed: false

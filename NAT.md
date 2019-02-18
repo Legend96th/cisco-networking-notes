@@ -1,9 +1,3 @@
-createdAt: "2018-09-05T13:01:49.050Z"
-updatedAt: "2019-01-22T20:46:27.142Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "NAT"
-content: '''
   # NAT
   Network Address Translation
   
@@ -35,6 +29,3 @@ content: '''
     * Could have 65000 hosts on a single public IP address 
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

@@ -1,9 +1,3 @@
-createdAt: "2018-09-02T14:38:25.909Z"
-updatedAt: "2019-01-22T19:57:38.635Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "General notes"
-content: '''
   # General notes
   
   * Might want to manually set the speed (link speed) & duplex (half/full) mode on devices because auto settings might crash
@@ -45,9 +39,3 @@ content: '''
   * Wireless Access points
     * Autonomous AP: An AP that is managed individually
     * Lightweight AP: An AP that can be managed in group with a wireless LAN controller
-'''
-tags: [
-  "CISCO"
-]
-isStarred: false
-isTrashed: false

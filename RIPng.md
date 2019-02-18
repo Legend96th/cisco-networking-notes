@@ -1,9 +1,3 @@
-createdAt: "2018-09-12T08:29:47.640Z"
-updatedAt: "2018-09-12T08:43:40.030Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "RIPng"
-content: '''
   # RIPng
   
   RIP protocol for IPv6
@@ -22,6 +16,3 @@ content: '''
   
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

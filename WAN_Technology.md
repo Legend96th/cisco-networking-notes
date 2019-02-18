@@ -1,9 +1,3 @@
-createdAt: "2018-09-15T22:11:24.735Z"
-updatedAt: "2018-10-19T21:45:19.529Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "WAN Technology"
-content: '''
   # WAN Technology
   
   WAN protocols
@@ -153,6 +147,3 @@ content: '''
   * VSAT
   
 '''
-tags: []
-isStarred: false
-isTrashed: false

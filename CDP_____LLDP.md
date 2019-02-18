@@ -1,9 +1,3 @@
-createdAt: "2018-09-09T14:03:18.449Z"
-updatedAt: "2019-01-23T21:00:08.866Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "CDP //LLDP"
-content: '''
   # CDP //LLDP
   
   # CDP
@@ -24,6 +18,3 @@ content: '''
   * Provides informations about adjacent LLDP-Speaking devices
   * Sends to multicast MAC address with an OUI of 01:80:C2
 '''
-tags: []
-isStarred: false
-isTrashed: false

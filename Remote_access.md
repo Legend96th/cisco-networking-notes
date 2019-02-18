@@ -1,9 +1,3 @@
-createdAt: "2018-09-05T09:55:04.857Z"
-updatedAt: "2018-12-14T15:55:39.642Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Remote access"
-content: '''
   # Remote access
   
   
@@ -78,6 +72,3 @@ content: '''
   
   Enabled by setting a login password on the "line vty" & setting an enable password
 '''
-tags: []
-isStarred: false
-isTrashed: false

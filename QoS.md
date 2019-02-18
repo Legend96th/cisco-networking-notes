@@ -1,9 +1,3 @@
-createdAt: "2018-08-28T09:08:33.765Z"
-updatedAt: "2019-02-14T10:11:47.445Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "QoS"
-content: '''
   # QoS
   
   # Converged networks problems
@@ -332,7 +326,3 @@ content: '''
   class-map
   ```
 '''
-tags: []
-isStarred: false
-isTrashed: false
-linesHighlighted: []

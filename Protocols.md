@@ -1,9 +1,3 @@
-createdAt: "2018-09-02T09:01:16.551Z"
-updatedAt: "2018-12-16T13:50:41.218Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Protocols"
-content: '''
   # Protocols
   
   * **CSMA/CD**: Carrier Sensing Multiple Access / Collision Detection
@@ -41,9 +35,3 @@ content: '''
   * ICMP  ~/
   
   
-'''
-tags: [
-  "CISCO"
-]
-isStarred: false
-isTrashed: false

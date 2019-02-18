@@ -1,9 +1,3 @@
-createdAt: "2018-09-02T14:07:38.132Z"
-updatedAt: "2019-02-03T19:48:08.490Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "Commands"
-content: '''
   # Commands
   
   * Add a login password
@@ -578,9 +572,3 @@ content: '''
   ```
   Router(config-router)#passive-interface  default
   ```
-'''
-tags: [
-  "CISCO"
-]
-isStarred: false
-isTrashed: false

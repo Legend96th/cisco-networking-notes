@@ -1,9 +1,3 @@
-createdAt: "2018-09-11T12:23:51.090Z"
-updatedAt: "2018-09-12T20:49:57.109Z"
-type: "MARKDOWN_NOTE"
-folder: "06e9f678163ed5819f33"
-title: "EIGRP"
-content: '''
   # EIGRP
   Enhaced Interior Gateway Router Protocol
   
@@ -41,9 +35,3 @@ content: '''
   * FD (Feasible distance): distance from source router to destination router
   * AD (Advertise distance): distance from next hop router to destination router
   * EIGRP nei
-'''
-tags: [
-  "CISCO"
-]
-isStarred: false
-isTrashed: false
