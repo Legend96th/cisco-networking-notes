@@ -270,6 +270,8 @@
   
   * DHCP relay agent
     * A router that has been configured to forward DHCP discover messages to a specefic destination IP address or specefic destination network
+  * If the DHCP server is on another subnet, the router's interface facing the network must be configured with `Router(config-if)#ip helper-address <ip_address>` 
+  * DHCP option 82: Causes a DHCP Request packet to contain information indicating the switch port from which the DHCP request came from
     
   
   

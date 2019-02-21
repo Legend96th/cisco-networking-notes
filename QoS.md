@@ -1,3 +1,4 @@
+  
   # QoS
   
   # Converged networks problems
@@ -63,6 +64,9 @@
   Deep Packet inspection
   
   Some apps might try to hide their packets in order to not be identified by the network devices & gets held down. Even by that the devices can perform a deep packet inspection on the first equipement reading the packet (heavy work). The equipement then tags the packet so that the other equipement wont do the same inspection again.
+  
+  **Note**
+  The QoS DPI differs from the one used with IPSs in a way that QoS DPI knows the source & destination of traffic while the IPS doesn't, it just stops malicious traffic from going in to the network using signatures.
   
   # NBAR
   Network Base Application Recognition

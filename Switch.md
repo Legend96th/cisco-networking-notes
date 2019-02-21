@@ -38,7 +38,9 @@
   
   ---
   
-  ## Security
+  # Security
+  
+  ## Defence mechanisms
   
   * **Shutdown unused ports**
     * Shutdown all the ports that are currently unused & only keep the used ones active
@@ -58,6 +60,35 @@
     * View the stored MAC addresses `Switch#show port-security address`
   * **NULL_VLAN**
     * Create an unused VLAN & set all unused ports on it to isolate them from prod ports
+  * Non-Default native VLAN
+    * Change the default native VLAN on switches to avoid VLAN hopping attacks
+  * Implement 802.1x
+    * No device can communicate to the rest of the network until it authenticates itself
+    * Terminology:
+      * Supplicant: A device that wants to communicate on the network (end user device)
+      * Authenticator: The device that asks the supplicants for authentication (switch for example)
+      * Authentication server: The server that checks the authentication credentials of the supplicants & inform the authenticator (Radius server)
+    * What happens:
+      * When a supplicant is connected to an authenticator, this latter sends a **challenge** to the supplicant asking it to authenticate before gaining access to the network
+      * The supplicant then sends it's **username and password** to the authentication server to be checked
+      * If the credentials are good, the authentication server sends an **Authorization** to the authenticator informing it that the supplicant is authorized 
+    * It can use EAP to encrypt the authentication process (between supplicant and authentication server)
+      * EAP (Extensible Authentication Protocol): A protocol, with multiple variants (called "methods") that defines how authentication and encryption are performed between and 802.1x supplicant and authenticator
+  * DHCP Snooping: Allows a switch port to reject packets coming in from a DHCP server if that port is set to an untrusted state
+  * Set a DHCP rate limit to limit the DHCP traffic (packet/sec) received from an interface
+    
+  
+  
+  
+  ## Attack types
+  
+  * VLAN hopping attack
+    * An attack where an attaker's device is able to attack a device in another VLAN without crossing over a router
+    * The attacker uses double encapsulation of his frames:
+      * The packet is encapsulated with the destination's VLAN tag & above that with the native  VLAN tag (mostly using VLAN 1)
+      * When the packet reaches the first switch, the native VLAN tag is removed from it & it get's sent on an 802.1Q trunk to the second switch (because there's no need to tag the native VLAN when going on a trunk)  which then removes the VLAN 20 tag & sends it to the destination 
+  * DHCP spoofing: An attacker where the attacker has a DHCP server, which respponds with a DHCP Discover message sent from a DHCP client. (NOTE: If the client uses the attacker's DHCP server, it can be convinced that its default gateway is the IP address of one of the attacker's devices)
+    
   
   ### Error Disabled Port Automatic Recovery
   

@@ -228,32 +228,6 @@
   Switch(config)#enable secret sof
   ```
   
-  * Create an standard numbered ACL policy 
-  ```
-  #access-list <id> <deny|permit> <network_ip> <wildcard_mask>
-  (Conf)# access-list 50 deny 11.0.0.0 0.255.255.255
-  ```
-  
-  * Attribute a numbered ACL to an interface
-  ```
-  #ip access-group <ACL_ID> <in|out>
-  (Conf-if)# ip access-group 50 in
-  ```
-  
-  * Create an extended numbered ACL policy
-  Either enter IP of a single device only or use network with wildcard mask
-  ```
-  (Conf)# access-list <id> <deny|permit> (TCP|UDP) [host] <source_IP> [wildcard_mask] [host] <destination_IP> [wildcard_mask] [eq <port>]
-  ```
-  
-  * Create Named ACL
-  ```
-  Router(config)#ip access-list <extended|standard> <name>
-  Router(config)#[acl_order_number] <deny|permit> <proto> host 10.0.0.3 host 11.0.0.3
-  Router(config-ext-nacl)#deny icmp host 10.0.0.3 host 11.0.0.3
-  Router(config-ext-nacl)#permit icmp any any 
-  ```
-  
   * Configure static NAT
   
   ```
@@ -466,13 +440,25 @@
   Router(config)#logging 10.0.0.2
   ```
   
-  * Only trust one port as a DHCP server for a certain vlan 
+  * Activate DHCP snooping
   
   ```
   Switch(config)#ip dhcp snooping
-  Switch(config)#ip dhcp snooping vlan 1
+  # Must be activated for all VLANs including VLAN 1
+  Switch(config)#ip dhcp snooping vlan <vlan_id>
   Switch(config)#int f0/3
   Switch(config-if)#ip dhcp snooping trust 
+  ```
+  
+  * Set snooping limit
+  ```
+  # Snooping must be activated
+  Switch(config-if)#ip dhcp snooping limit rate <dhcp_packet/second>
+  ```
+  
+  * Check the dhcp snooping configuration
+  ```
+  Switch#show ip dhcp snooping
   ```
   
   * Add a virtual link
@@ -572,3 +558,4 @@
   ```
   Router(config-router)#passive-interface  default
   ```
+'''
