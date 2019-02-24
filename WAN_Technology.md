@@ -7,7 +7,7 @@
     * HDLC
     * PPP
     * MPLS
-    * Metro Ethernet
+    * Metro Ethernet (MAN not WAN)
   
   * DTE: Data Terminal Equipment 
     * Receives clocking (speed limit)
