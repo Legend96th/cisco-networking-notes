@@ -6,6 +6,8 @@
   * Protocols:
     * HDLC
     * PPP
+    * MPLS
+    * Metro Ethernet
   
   * DTE: Data Terminal Equipment 
     * Receives clocking (speed limit)
