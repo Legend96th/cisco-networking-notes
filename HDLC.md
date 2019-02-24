@@ -1,7 +1,7 @@
   # HDLC
   Higher level data link control protocol
   
-  
+  The default L2 encapsulation found on cisco serial interfaces
   
   * Serial only
   * Default on serial links

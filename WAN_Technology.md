@@ -3,7 +3,9 @@
   WAN protocols
   * Defines format of data to be sent on the WAN links
   * Also reffered as encapsulation
-  * HDLC & PPP
+  * Protocols:
+    * HDLC
+    * PPP
   
   * DTE: Data Terminal Equipment 
     * Receives clocking (speed limit)
