@@ -3,8 +3,16 @@
   * Link aggregation: active/backup
   * MAC address table starts emptey
   * When a device sends a message it gets registered
-  * The message is flooded (similar to broadcasted) to all the devices
+  * The message is flooded (broadcasted to all except the source port) to all the devices
   * When a reply is sent, the responder is registered
+  * Sending mechanisms
+    * Cut-through  
+      * Start sending when receiving 14 bytes
+    * Store and forward
+      * A full frame must be received to start sending
+    * Adaptive Cut-through
+      * Start in "Cut-through" mode
+      * If an error rate is of 10% change to "store and forward", after a certain timeout if the errors are gone switch back to "Cut-through"
   * The entry stays in the mac address table for an aging time that can be checked using 
     * `Switch#show mac address-table aging`
   * The aging time can be changed using
@@ -21,7 +29,12 @@
     * Learning 15s
     * Forwarding (as long as link is up)
   * Routed Ports are ports configured to act like a router interface (eg. you can assign the port an IP address). A switch port is converted into a routed port with the interface configuration mode cocmmand: `no switchport`
-  
+    
+    CAM (Content Addressable Memory) == MAC addresss table
+    
+    ASIC: Application Specefic Integrated Circuit
+    
+  ---
   
   **Note**:
   * 2 types of switches

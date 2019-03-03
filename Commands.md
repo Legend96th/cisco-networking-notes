@@ -558,4 +558,9 @@
   ```
   Router(config-router)#passive-interface  default
   ```
+  
+  * Show the debug information on an ssh connexion
+  ```
+  #terminal monitor
+  ```
 '''

@@ -70,6 +70,9 @@
   ## Broadcast
   One to all
   
+  ## Flooding
+  One to all, except sender
+  
   ---
   # MAC address
   
@@ -135,11 +138,19 @@
   * Application (7)
     * [Data]
     * User interface
+    * Protocols
+      * DHCP
+      * DNS
+      * HTTP
+      * HTTPs
+      * SMTP
   * Presentation (6)
     * [Data]
     * ASCII
-    * Voice: mp3
-    * Video: mpeg
+    * Coding
+    * Extension
+      * Voice: mp3
+      * Video: mpeg
     * Compression
     * Encryption
   * Session (5) 
@@ -149,29 +160,36 @@
     * End path
   * Transport (4)
     * [Segment]
+    * Segmentation
+      * The **pure** data is segmented starting from (46 to 1460) Byte
     * Adds a header to the data
       * Each message (segment) (header + data) is made of 1480 byte
-      * If a message is larger than 1500 it get segmented
-      * The header contains:
-        * SYN: transmission method: 
-          * Transmission Control Protocol(TCP)
-          * User Datagram Protocol (UDP)
-        * Sequence number: message/segment
+      * If a message is larger than 1500 it gets segmented
+    * Segment contains:
+        * [DATA]
         * Source & destination port      
+        * SYN: transmission method: 
+          * Transmission Control Protocol(TCP) 20 Byte
+          * User Datagram Protocol (UDP) 8 Byte
+        * Addressing Sequence number: message/segment
         * CRC (2bytes): Cyclic Redundency 
           * Hashing result of all the segment
+    * Size of segment: 1480 Byte
   * Network (3)
     * [Packet]
     * [Router]
     * Layer 3 || L3
-    * Adds source & destination IP to the segment (20 byte)
+    * Adds source & destination IP to the segment (20 Byte)
     * Size of packet 1500 byte
   * Data-Link (2)
     * [Frame]
     * [Switch]
     * Layer 2 || L2
-    * Adds source & destination Mac addresses (14 byte)
-    * Adds another CRC (4 byte)
+    * Frame contains
+      * Packet
+      * Source & destination Mac addresses (14 byte)
+      * Adds another CRC (4 byte)
+      * Preamble (8 Bits): Sent on the first frame only to inform that frames will be coming and to test the speed
   * Physical (1)
     * [Bit]
     * [Physical support]
@@ -194,35 +212,35 @@
   # TCP
   
   * Test the connexion before start sending data
-  * Synchornisation (data sent) (Syn)
-  * Acknoledgment (data well received) (Ack)
-  
-  Sender: Syn => 
-  Receiver: <= Syn + Ack 
-  Snder: Ack =>
-  
-  * Sliding window: the amount of first packets sent before receiver a Syn+Ack from the receiver
+  * ##
+    * Synchornisation (data sent) (Syn)
+    * Acknoledgment (data well received) (Ack)
+  * Sliding window: the amount of first packets sent before receiving a Syn+Ack from the receiver
     * The first packets are sent before confirmation of the link
+  * Steps (sessions):
+    * Session establishment 
+      * Uses 3-Way handshake
+        * Sender: Syn => 
+        * Receiver: <= Syn + Ack + Window
+        * Snder: Ack =>
+    * Session control and management:
+      * Based on the window, the sender sends the segments
+      * The receiver sends an ACK with the segment that it needs with a window specifying how many segments to send (ACK + window)
+        * If the frames are received correctly the receiver sends an ACK with the next segment and a window size
+        * If a frame isn't received, the receiver sends an ACK with the missing frame with a window of 1
+    * Session termination
+      * 4-Way handshake
+        * => FIN
+        * <= ack
+        * <= fin
+        * => ack
+  
+  
+  
+  
   ...
   
-  ---
   
-  # Switch
-  
-  * MAC address table starts emptey
-  * When a device sends a message it gets registered
-  * The message is broadcasted to all the devices
-  * When a reply is sent, the responder is registered
-    
-    
-    CAM (Content Addressable Memory) == MAC addresss table
-  
-  **Note**:
-  * 2 types of switches
-    * L2 switches: basic switch
-    * Multi Layer Switch (MLS): can reach up to L4 & do some basic routing
-  * Forwarding rates: number of ports * speed of port
-  * POE: Power Over Ethernet
   ---
   
   # Subnetting
