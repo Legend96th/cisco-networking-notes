@@ -1,13 +1,31 @@
   # WAN Technology
   
-  WAN protocols
+  # WAN protocols
   * Defines format of data to be sent on the WAN links
   * Also reffered as encapsulation
-  * Protocols:
-    * HDLC
-    * PPP
-    * MPLS
-    * Metro Ethernet (MAN not WAN)
+  * Technologies:
+    * Circuit switching
+      * HDLC
+      * PPP
+    * Packet switching
+      * X.25
+      * Frame relay
+    * Cell switching
+      * ATM
+    * Frame switching
+      * Ethernet
+        * Metro Ethernet (MAN not WAN)
+    * Label switching
+      * MPLS
+  
+  * Switching protocols
+    * ##:
+      * Signal
+      * Data
+    * Types: 
+      * OSPF, EIGRP, HDLC, PPP
+  * Switched protocols 
+    * IPv4, IPv6, Appletalk, IPx, MPLS
   
   * DTE: Data Terminal Equipment 
     * Receives clocking (speed limit)
@@ -28,6 +46,31 @@
   
   
   ---
+  # WAN topologies
+  
+  * Point-to-Point networks:
+    * Direct connection between 2 router
+    * Interconnects two devices
+    * Typically uses a L2 protocol
+    * Could be a physical or logical point-to-point connection
+  * Hub and spoke
+    * Cost effective for multiple sites
+    * Could have suboptimal paths
+    * Hub could be a single point of failure
+  * Full mesh networks
+    * Doesn't scale well
+    * Optimal pathing
+    * Higher expense
+  
+  ---
+  # Signle Homed vs Dual Homed
+  
+  * Signle home: One link to one ISP
+  * Dual home: Two or more links to one ISP
+  * Single Multihomed: One link per ISP to two or more ISPs
+  * Dual Multihomed: Two or more links to two or more ISPs
+  
+  ---
   
   # Communicating 2 networks passing by multiple routers connected with RJ45 cables
   
@@ -43,12 +86,17 @@
   # 1.Dedicated circuit switching (Leased line)
   Site to site private connexion
   
-  * Speeds used
+  * Digital Speed (DS)
     * DS0: 64Kbps
-    * DS1: T1: 1.64Mbps
+    * DS1: 
+      * T1 (USA): 1.54 Mbps
+      * E1 (Europe): 2.048 Mbps
     * DS2
-    * DS3: (T3: 45Mbps) & (E3: 35Mbps)
+    * DS3: 
+      * T3 (USA): 45Mbps
+      * E3 (Europe): 34Mbps
     * STM1: 155Mbps
+    * STM64: 10Gbps 
     * STM256: 40Gbps
   STM is used by ISP to connect to the international backbone
   
@@ -94,35 +142,7 @@
   # 5.MPLS
   Multi protocol Lable Switching
   
-  
-  * Terminology
-    * CE: Customer Edge
-      * Router of the customer (the one directly conncted to the ISP not internal ones)
-    * PE: Provider Edge
-      * Router of ISP connecting the customers
-      * Translates routing table to MPLS labels & vice-versa
-    * P: Provider
-      * Router of ISP connecting the PE routers
-      * Doesn't understand routing tables
-      * Uses MPLS labels
-    
-  * Each network is tagged with a number (label). Instead of sending all the 32bit ipv4 address (which get checked on each level bit by bit) we send the tag only which will gain us some time
-  * MPLS works between layer 2 & 3 (L2.5)
-  * PE routers add the MPLS tag (label) to packets received from the CE & sends them to the P
-  * Components of MPLS segment
-    * Lable: the tagged number
-    * Experimental (QoS)
-    * S
-      * 0: At this level using labels
-      * 1: At this level we will start using routing tables (Last router)
-    * TTL
-  * **Benefits of MPLS:**
-    * Traffic engineering: 
-      * Load balancing
-      * Can block routes
-    * MPLS VPN (using VRF)
-    * **Fast routing**
-    * Multicast 
+  *check MPLS page*
   
   ---
   

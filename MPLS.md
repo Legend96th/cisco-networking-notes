@@ -27,3 +27,37 @@ content: '''
   * ELSR (Edge Label Switch Router): A device at the edge of an MPLS cloud that adds labels to traffic coming into the cloud and remouves labels from traffic leavingthe cloud
     * Also known as a PE (Provider Edge) router
   * LSR (Label Switch Router): A device inside an MPLS cloud that relabels traffic and makes forwarding decisions based on those labels
+    * Also known as a P (Provider) router
+    * Labels can be changed at the LSRs
+  
+  
+  ----
+  
+  
+  * Terminology
+    * CE: Customer Edge
+      * Router of the customer (the one directly conncted to the ISP not internal ones)
+    * PE: Provider Edge
+      * Router of ISP connecting the customers
+      * Translates routing table to MPLS labels & vice-versa
+    * P: Provider
+      * Router of ISP connecting the PE routers
+      * Doesn't understand routing tables
+      * Uses MPLS labels
+    
+  * Each network is tagged with a number (label). Instead of sending all the 32bit ipv4 address (which get checked on each level bit by bit) we send the tag only which will gain us some time
+  * MPLS works between layer 2 & 3 (L2.5)
+  * PE routers add the MPLS tag (label) to packets received from the CE & sends them to the P
+  * Components of MPLS segment
+    * Lable: the tagged number
+    * Experimental (QoS)
+    * S
+      * 0: At this level using labels
+      * 1: At this level we will start using routing tables (Last router)
+    * TTL
+  * **Benefits of MPLS:**
+    * Traffic engineering: 
+      * Load balancing
+      * Can block routes
+    * MPLS VPN (using VRF)
+    * **Fast routing**

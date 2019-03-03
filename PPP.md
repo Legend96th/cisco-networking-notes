@@ -17,16 +17,44 @@
           * 2-Way hand-shake process
           * Password is sent in clear text
         * Chap: Challenge-handshake authentication protocol 
-          * Uses 2-Way authentication
-            * 
-          * 3-Way hand-shake process
+          * Uses 2-Way hello
+          * 3-Way hand-shake authentication process
+            * <= Request username
+            * => Sends username
+            * <= Challenge: Sends random number + process id and requests credentials 
+            * => Send credentials (password + process id + random number)
           * Password is sent in encrypted text (md5)
+        * Chap/pap:
+          * Uses chap, if it doesn't work use pap
     * Compression
     * Error detection and correction [doesn't work well with multiple links]
     * Multiple links support (Same logic as Etherchannel) [doesn't work well with error detection and correction]
   * Terminology:
     * LCP (Link Control Protocol): A protocol used by PPP to setup, maintain and teardown a connecion
     * NCPs (Network Control Protocols): The protocols used to negotiate the configuration of protocols being transmitted over a PPP link
+  * Frame content
+    * CRC
+    * Packet
+    * Type
+    * Control
+    * Addressing (8 Bits all set to 1)
+    * Flag (preamble)
+  
+  * Connection phases:
+    * Phase 1 (hand-shaking):
+      * LCP (Link Control Protocol)
+        * Hello exchange
+          * => hello
+          * <= hello
+        * link operation negotiation
+          * Authentication (either pap or chap)
+    * Phase 2 
+      * => Supported IP version
+      * <= ok
+      * => Request IP address
+      * <= ok *gives an IP address*
+    * Phase 3
+      * Data is sent
   
   ---
   
