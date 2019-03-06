@@ -1,5 +1,8 @@
-  
   # QoS
+  Quality Of Service (Managed unfairness)
+  
+  
+  
   
   # Converged networks problems
   * Lack of bandwidth
@@ -27,7 +30,7 @@
   
   ## Integrated services model IntServ - RSVP
   * Similar to a private courrier service 
-  * An application reserves the bandwith that it needs for a certain time
+  * An application reserves the bandwith that it needs (for a certain time) without sharing it with others
   * Some applications have special bandwidth requirments
   * Provides multiple service levels
   * Requests specefic services before sending data
@@ -90,11 +93,19 @@
   
   * Marking is used to mark each packet as a member of traffic class so that packets can be easily identified throughout the network
   * Marking is also known as coloring, marks each packet as a member of a network class so that the packet class can be quickly recognized throughout the restt of the network
-  * The marking field available at the data link layer is dependent on the protocol in use and is bound by the extent of the L2 domain
-  * At the network layer, IP precedence or DSCP is used to mark the traffic class of packets and can be preserved across the entire network domain
-  * Each data link protocol has its own marking mechanism
-    * Ethernet 802.1Q: User priority field or CoS, with 8 classes 
-    * MPLS: Experimental bits, or EXP with 8 classes
+  * The marking field available at the L2 (data-link layer) is dependent on the protocol in use and is bound by the extent of the L2 domain
+    * CoS (Class Of Service) (3 Bits) : 8 classes from 0 to 7
+      * Classes 6 and 7 are reserved for network use 
+    * Each data link protocol has its own marking mechanism
+      * Ethernet 802.1Q: Uses the PRI (priority) field as the CoS Bits 
+        * The PRI field is in the TCI Bytes (Tag Control Information)
+      * 802.1P: Some NICs are able to add a 4 Byte header simillar to the 802.1Q header in-order to use the PRI bits with an exception that all the "VLAN ID" bits are set to 0
+      * MPLS: Uses the EXP bits (Experimental bits) as the CoS bits 
+      * ISL frame: Uses the VLAN bits in the ISL header as the CoS bits 
+    * The CoS marking gets rewritten when it crosses a router 
+  * At the L3 (network layer), the ToS Byte (Type Of Service) [IPv4] or TC Byte (Traffic Class) (IPv6) is used to mark the traffic class of packets and can be preserved across the entire network domain
+    * IP precedence bits (3 bits from the ToS Byte)
+    * DSCP field bits (6 bits from the ToS Byte)
   * In order to provide end-to-end QoS accross a network, QoS markings must be mapped between data link and network marking fields
   * QoS service classes are used to group packets that are to receive similar levels of network QoS. These service classes are used to create a network-wide QoS policy
   
@@ -121,6 +132,7 @@
     * Dropping causes TCP retransmits
     * Supports packet marking or re-marking
     * Less buffer usage (shaping requires an additional shaping queuing system)
+    * **Used on lower speed interfaces**
   * Shapper
     * Buffer exceeding packets
     * Lowers the bandwidth if the limit is exceeded
@@ -129,6 +141,18 @@
     * Buffering minimizes TCP retransmits
     * Does not support marking or re-marking
     * Supports interaction with Frame Relay congestion indication
+    * **Used on higher speed interfaces**
+  
+  ## How does speed limiting work
+  
+  When we send on a line, **we send at a constant speed**. By limiting traffic bandwidth of traffic, we are not limiting the traffic speed at an exact instant (we send at a constant speed) but instead **we limit the average speed** that we send with.
+  Metaphorically, there's a bucket that has a certain capacity. This bucket doesn't get emptied (sent) unless it's full. When that bucket gets sent, it's sent using the line speed. On a specified time interval, we place a certain amount of data in that bucket in a way that it get's full to answer the average speed that we want 
+  
+  * Terminology:
+    * CIR (Committed Information Rate): (Avg_speed/s) Averge  speed over the period of a second
+    * Bc (Committed Burst): Number of Bits (for shaping) or Bytes (for policing) that are deposited in the token bucket during a time interval
+    * Tc  (Timing Interval): The interval at which tokens are deposited in the token bucket
+  * **CIR = Bc / Tc**
   
   ---
   # Single rate & multiple coloring
@@ -202,7 +226,7 @@
         * ToS field
       * A hash algorithm is used to produce the index of the queue in which the packet is enqueued
   * **Class-Based Wheited Fair Queuing (CBWFQ)**
-    * CBWFQ is a mechanism that is used to guarentee bandwidth to classes
+    * CBWFQ is a mechanism that is used to **guarentee bandwidth** to classes
     * CBWFQ extends the standard WFQ functionality to provide suppprt for user-defined traffic classes 
       * Classes are based on user-defined match criteria
       * Packets satisfying the match criteria for a class constitute the traffic for that class
@@ -265,8 +289,8 @@
   * RED is a mechanism that randomly drops packets before a queue is full
   * RED increases the drop rate as the average queue size increases
   * RED results in the follwing
-    * TCP sessions slow down to the approximate rate of output-link bandwidth
-    * The average queu size is small (much less than the maximum queu size)
+    * TCP sessions slow down (reduce the window size) to the approximate rate of output-link bandwidth
+    * The average queue size is small (much less than the maximum queu size)
     * TCP sessions are desynchronized by random drops
   
   RED: Randomly drops packets from a queue based on priority & drop probability. Can be set with different settings & different aggressiveness 
@@ -279,9 +303,68 @@
   * WRED has 64 default value sets for DSCP-based WRED
   
   ---
+  # DSCP
+  
+  * DSCP values: 
+    * IETF selected 21 default categories called PHBs (Per Hop Behaviors)
+    * Last digit is always 0
+    * 4 categories
+      * Default: 
+        * Decimal value: 00
+        * Binary value: 000000
+      * EF (Expedited Forwarding): 
+        * Highest priority traffic
+        * Decimal value: 46
+        * Binary value: 10111**0**
+      * CS (Class Selector): 100% backwards compatibility with IP precedence (the last 3 bits to the right are all set to 0)
+        * CS1
+        * CS2
+        * CS3: 
+          * Decimal: 24
+          * Binary: 011000
+        * CS4
+        * CS5
+        * CS6: RESERVED
+        * CS7: RESERVED
+      * AF (Assured Forwarding)
+        * Uses 2 key concepts
+          * Class: 
+            * IP Precedence equivelent value
+            * Selected based on the 3 **left** most bits
+            * 4 possible classes:
+              * Class 1: 001
+              * Class 2: 010
+              * Class 3: 011
+              * Class 4: 100
+          * Drop probability
+            * If WRED is enabled, packets with the highest DP are dropped first **no matter what class the traffic is** 
+            * Selected based on the 3 **right** most bits
+            * 3 values
+              * Low DP (1): 01**0**
+              * Medium DP (2): 10**0**
+              * High DP (3): 11**0**
+        * Naming convention: AF\\<class_num\\>\\<drop_probability_number\\>
+          * Example: AF12 - AF42 - AF43 - AF11
+  ---
+  
+  # ECN
+  Explicit Congestion Notification
+  
+  * The ECN uses the last 2 right most bits of the ToS byte 
+  * The bits are as follows: [...|ECT bit|CE bit]
+    * ECT bit: ECN-capable transport
+    * CE: Congestion experienced
+  * Values:
+    * 00: Router is not ECN capable
+    * 01: Router is ECN capable but is not experiencing congestion
+    * 10: Router is ECN capable but is not experiencing congestion
+    * 11: Router is ECN capable and is currently experiencing congestion
+  
+  
+  ---
   
   ## DSCP encoding 
-  * **DS field**: The IPv4 header ToS (Type of Service) octet or the IPv6 "traffic class" octet when interepted per definition that is given in RFC2474
+  * **DS field**: The IPv4 header ToS (Type of Service) Byte or the IPv6 TC (traffic class) Byte when interepted per definition that is given in RFC2474
   * **DSCP**: The first six bits of the DS field that are used to select a PHB
   
   ## DS field drop mechanism
@@ -311,8 +394,93 @@
   Since the data contained in the VoIP packets is 3 times smaller than the header & since the header is repeated in all the packets of the same conversation, RTP header compression uses a small identifier between routers to identify the same conversations. It sends the header only once & then sends all the voice packets containing only the ID that was chosen for it. Uppon arrival, the router re-attaches the header back to each packet & sends it to the LAN.
   
   ---
+  # MQC (Modular QoS CLI)
+    * class-map: 
+      * no more than 11 classes
+      * match-all (default): All the match criteria have to be satisfied in order for the traffic to be matched into that class 
+      * match-any: Only one match criteria need to be satisfied in order for the traffic to be matched into that class 
+    * policy-map
+      * Assign a policy to a class
+    * service-policy
+      * Some policies can only be applied on a single traffic flow direction (inbound or outbound)
+    * interface
   
-  ## Implementing QoS
+  ---
+  
+  # Configuration
+  
+  * Enable QoS on a switch
+  ```
+  Switch(config)#mls qos
+  ```
+  
+  * Trust an interface's marking values
+  ```
+  # Set the type of marking to be trusted from that interface
+  Switch(config-if)#mls qos trust (cos|dscp|ip-precedence)
+  
+  # Set the type of device to be trusted from that interface (CDP must be enabled for this to work)
+  Switch(config-if)#mls qos trust device (cisco-phone|cts|ip-camera)
+  ```
+  
+  
+  
+  
+  
+  * Applying MQC
+    * Class-map
+    ```
+    Router(config)#class-map [match-(all|any)] <class_name>
+    Router(config-cmap)#match ?
+    ```
+    
+    * Policy-map
+    ```
+    ## Create a policy map
+    Router(config)#policy-map <policy_name>
+    
+    ## Add a class to the policy
+    Router(config-pmap)#class <class_name>
+    
+    ### Apply a marking to a class
+    Router(config-pmap-c)#set dscp <dscp_value>
+    
+    {
+    ### Set a minimum bandwidth guarenteed to a class
+    Router(config-pmap-c)#bandwidth <bw_k-bit-ps>
+    OR
+    ### Set a maximum bandwidth to a class
+    Router(config-pmap-c)#police <bw_bits-ps> [...]
+    OR
+    ### Set a priority class (the speed here is a limit not a guarenteed speed)
+    Router(config-pmap-c)#priority <bw_k-bit-ps>
+    }
+    ### Setup RED/WRED
+    Router(config-pmap-c)#random-detect dscp-based
+    
+    ### Setep ECN
+    Router(config-pmap-c)#random-detect ecn
+    
+    ### Setup RTP header compression on low speed interfaces
+    Router(config-pmap-c)#compression header ip rtp
+    ```
+    
+    * Service policy
+    ```
+    Router(config-if)#service-policy (output|input) <policy_name>
+    ```
+    
+  * Show mapped classes
+  ```
+  Router#show class-map
+  ```
+   
+  * Show policies associated with classes
+  ```
+  Router#show policy-map [interface <interface>]
+  ```
+  
+  * *other*
   
   ```
   Router(config)#class-map match-any TestMedea
@@ -320,12 +488,11 @@
   
   ```
   
-  
   ```
   policy-map match-all
   ```
   
-  NBAR2
+  * NBAR2
   ```
   class-map
   ```
