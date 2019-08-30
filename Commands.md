@@ -177,6 +177,26 @@
   Switch(config-if)#switchport port-security mac-address <mac_address|sticky> 
   ```
   
+  * Check mac address removal aging time
+    * `Switch#show mac address-table aging`
+  * The aging time can be changed using
+    * `Switch(config)#mac address-table aging-time <>`
+  * Entries can be dynamically learnt or statically added using
+    * `Switch(config)#mac address-table static <MAC-address> vlan <vlan-num> interface <interface-type> <interface-num>`
+  * Checked duplex mismatch
+    * `Switch#show interfaces status`
+    * `Switch#show interfaces <int>` with one side having a high number of CRC (full duplex side) & the other one having a high number of late collisions (half-duplex side)
+  * View the port security configuration & violation counter with `Switch#show port-security`
+    * View the stored MAC addresses `Switch#show port-security address`
+  * Auto recovery
+    * Can be activated for different error causes
+      * `Switch(config)#errdisabled recovery cause ?`
+    * The time interval can be changed (default 300s = 5min)
+      * `Switch(config)#errdisabled recovery interval <sec>`
+    * Check the enabled recovery options  
+      * `Switch#show errdisabled recovery `
+    
+  
   
   * Add an enable password 
   ```
@@ -446,15 +466,17 @@
   Switch(config)#ip dhcp snooping
   # Must be activated for all VLANs including VLAN 1
   Switch(config)#ip dhcp snooping vlan <vlan_id>
+  
+  # Set trusted interfaces
   Switch(config)#int f0/3
   Switch(config-if)#ip dhcp snooping trust 
-  ```
   
-  * Set snooping limit
-  ```
-  # Snooping must be activated
+  # Set snooping limit
   Switch(config-if)#ip dhcp snooping limit rate <dhcp_packet/second>
   ```
+  
+  
+  
   
   * Check the dhcp snooping configuration
   ```

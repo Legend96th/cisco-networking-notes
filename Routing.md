@@ -1,120 +1,189 @@
   
   # Routing
   
+  * Routers stop broadcasts from crossing networks
+  * Rules of routing
+    * Routers will only add routes to it's routing table with reachable next-hops
+    * Routers will only use the best route based on the metric
+    * Routes must be belivable
+    * Routers will only accept routes that match it's own active protocols
   * Routing sources
     * Connected
     * Static routing
     * Dynamic routing
     * Default route
-  
-  ##### Notes
-  * Routers stop broadcasts from crossing networks
-  
-  ---
-  
-  # Static routing
-  
-  Notes:
-  * Static routes won't show up on the routing table if the next hop IP address is unavailable or the egress interface is down. To make a static route appear on the routing table even if that happend, add the keyword `permanent` at the end of the route addition command
-  * If using IPv6, a next hop Link-Local IPv6 address cannot be used on it's own, the egress interface must be specified aswell 
-  
-  ---
-  
-  # Dynamic routing
-  
-  ## IGP Interior Gateway Protocol
-    * Distance Vector: This method choose the route with the least amount of hops. If 2 routes have the same amount of hops, load balancing is used || It sends the whole routing table to it's directly connected neighbors periodically even if there has been no network changes || It doesnt have an overview of the whole network
-      * RIP (Routing Information Protocol)
-        * IEEE 
-        * Metric: hop counts
-        * Exchange the **entire** routing table (address + number of hops) every 30 secs or when a change in the topology occurs (full & triggered updates)
-        * The max hops that can be done by RIP is 15 hops (16 router passed)
-        * The path with the shortest hop count maybe he slowest
-        * Load balancing up to 4 equal paths
-        * Uses the poison reverse rule: If a router knows that one of his directly connected routes is unavailiable, it sends an update with a metric of 16 to inform other routers that it no longer exists
-        * Uses the split horizon rule: If a route is received from a router, it is not sent back to it with the routing table
-        * Uses route summerization by default (can lead to some errors). 
-          * The summerization is class based (the route summary will be a classful route not classless)
-        * RIPv1:
-          * Classful routing only (**NO subnetting**)
-          * Sends updates in broadcast via 255.255.255.255
-          * Timers:
-            * Update timer: 30sec
-            * Hold down timer: 180sec [The directly connected link becomes unavailable]
-            * Invalid timer: **180sec** (30+150) [The routes received from a router that hasn't sent updates in 180sec are **considered unusable**]
-            * Flush timer: **240sec** (180+60) [The routes received from a router that hasn't sent updates in 240sec are **removed**]
-        * RIPv2
-          * Uses multicast 224.0.0.9
-          * Only RIPv2 received update
-          * 16 hops only
-          * Supports subnetting
-            * If using subnetting, auto summary must be disabled to avoid having errors (if multiple routes can be summarized but they are not exiting the same interface, it'll genrate an error)
-        * RIPng (IPv6)
-          * IPv6 only
-          * Multicast FF02::9
-          * VLSM support
-      * IGRP
-      * EIGRP: Sends triggered updates [not periodically] (if there is a change in network condition then we can notify our neighbors)
-        * Uses these elements to calculate metric:
-          * Bandiwdth
-          * Delay
-          * Relaiability
-          * Load
-          * MTU
-  * Link-State: This method chooses the route with the fastest bandwidth (or lowest cost; *see table below*) || It has a map of all the network
-    * **OSPF** (Open Shortest Path First): 
-      * Uses classeless IP (supports subnetting)
-      * Hierarchal structure
-    * ISIS
-  
-  ## EGP Exterior Gateway Protocol
-  * Path-Vector: Knows information about the exact path that packets are going to take reach a sepcefic destination network 
-    * BGP
+  * A route is used based on:
+    * Lowest AD
+    * If same AD then we use the lowest cost
+  * Routing types
+    * Symetric: The same route is used for the request and the reply
+    * Asymetric: A different route is used for the reply
+  * Manually set the speed (link speed) & duplex (half/full) mode on devices because auto settings might crash [[recommended]] 
+  * Terminology:
+    * AS (Autonomous System): Collection of networks all under one administrative authority
+      * Routing protocols are divided into 3 categories in how they handle the AS ID
+        * Doesn't matter
+        * Must match but can be set as we want
+        * Is obtained from a higher level authority (ISP, IANA...)
+    * AD (Administrative Distance)
   
   ---
   
+  # Routing componenets
   ## Administrative Distance (AD)
-  If multiple routing protocols exist, the one with the least AD is used
-  It can be changed in case of a static address (during the addition of the command)
+  * Defines the trustworthiness (priority/preference) of a routing protocol
+  * 8-bit numbering system
+  * Ranges from 0 - 255
+  * If multiple routing protocols exist, the one with the lowest AD is used
+  * It can be changed in case of a static address (during the addition of the command)
+  * Locally significant value; not distributed to other routers
   
   
-  
-  |Protocol | Administrative Distance (AD)|
-  |-|-|
-  |Static interface | 0 |
-  |Static IP address | 1 |
-  |eBGP | 20 |
-  |EIGRP | 90 |
-  |OSPF | 110 |
-  |RIP | 120 |
-  |External EIGRP | 170 |
-  |Unknown | 255 |
+  | Protocol              | Administrative Distance (AD) |
+  | --------------------- | ---------------------------- |
+  | Connected             | 0                            |
+  | Static route          | 1                            |
+  | eBGP                  | 20                           |
+  | EIGRP                 | 90                           |
+  | OSPF                  | 110                          |
+  | IS-IS                 | 115                          |
+  | RIP                   | 120                          |
+  | External EIGRP        | 170                          |
+  | iBGP                  | 200                          |
+  | Unknown / Unreachable | 255                          |
   
   *Note:*
   External EIGRP is when a route is learnt from a dynamic routing protocol & then redistributed into EIGRP
   
   ---
+  # Metric
+  
+  * Used for best path selection
+  * IGPs use metric for best path calculation
+  * Lower value is preferred
+  * Depends on the routing protocol
+  
+  ---
   
   # Cost table
   **Memorize this** 
-  The cost of passing by a link with a
+  The cost of passing by a link 
   
   
-  | Speed | Cost |
-  |-|-|
-  | 1Mb/s | 100 |
-  | 100Mb/s | 19 |
-  | 1Gb/s | 4 |
-  | 10Gb/s | 2 |
+  | Speed   | Cost |
+  | ------- | ---- |
+  | 1Mb/s   | 100  |
+  | 100Mb/s | 19   |
+  | 1Gb/s   | 4    |
+  | 10Gb/s  | 2    |
+  
   
   
   ---
   
+  # Static routing
+  
+  * When adding a static route, the next hop can be:
+    * Local interface
+    * Remote IP address (IP address of the next hop / other router) [must be on the same subnet of at least 1 interface of a router]
+    * Local interface + remote IP address 
+  * Floating static routes: 
+    * Used as backup routes 
+    * A custom AD is set based on the need
+  
+  
+  Notes:
+  * Static routes won't show up on the routing table if the next hop IP address is unavailable or the egress interface is down. To make a static route appear on the routing table even if that happend, add the keyword `permanent` at the end of the route addition command [[tip]]
+  * If using IPv6, a next hop Link-Local IPv6 address cannot be used on it's own, the egress interface must be specified aswell 
+  * If a static route is configure with a local interface on a **multi access link (Ethernet)**, the router will suppose that the configured route **lives on that link** (is on that link) therefore, when a packet is received which needs to be forwarded to that network, an ARP request will be sent **on that link!!** (the link between the 2 routers not the one containing the actual network) which is **wrong!!** [[TIP]]
+  
+  ---
+  
+  # Dynamic routing types and classification
+  * Routing protocols are classified based on:
+    * Neighbor requirements (check if neighbors exist or just send and wait)
+    * Route maintenance (is the route valid)
+    * Visibility into network topology (full visibility of everyone or just knowing neighbors)
+    * Necessity of different data structures (databases, tables...etc)
+  * Routing updates type:
+    * Incremental / Triggered: When changes are detected they are sent 
+    * Full: All of the routing table is sent
+    * Periodic: Sent in the specified time interval
+      
+  
+  ## IGP 
+  Interior Gateway Protocol
+  Provide routing **within** an AS
+  
+  * Distance Vector: 
+    * No neighborships required
+    * Resends **all** routes **periodically** (even if there's no TC) to keep track of the routes maintenance 
+    * Visibility to directly connected routers only
+    * Database of learned routes
+    * Examples:
+      * RIPv1 & RIPv2 (Routing Information Protocol)
+      * IGRP (Interior Gateway Protocol) *deprecated*
+  * Link-State: 
+    * Neighborships are required
+    * Route maintenance
+      * Period Hello's 
+      * Regenerate LSAs periodically
+        * After a **long interval**, a router will resend **only his** LSAs to the entire network
+    * Complete topology visibilty **for directly-connected areas**
+    * Data structures:
+      * LSA database
+      * Neighbor table
+      * SPF Tree
+    * Examples:
+      * OSPF (Open Shortest Path First): 
+      * ISIS (Intermediate System To Intermediate System)
+  * Advanced Distance Vector (Hybrid):
+    * Neighborships are required
+    * Periodic Hellos between neighbors (route maintenance)
+    * Visibility to directly connected routers only
+    * Data structures:
+      * Topology table of learned routes
+      * Neighbor table
+    * Examples
+      * EIGRP (Enhanced Interior Gateway Protocol)
+  
+  ## EGP 
+  Exterior Gateway Protocol
+  Provide routing **between** multiple ASs
+  
+  * Path-Vector:
+    * Neighborships are required
+    * Periodic Hellos between neighbors (route maintenance)
+    * No knowledge of topology (relies on IGPs for this)
+    * Knows information about the exact path that packets are going to take reach a sepcefic destination network 
+    * Data structures:
+      * -
+    * Example:
+      * BGP (Border Gateway Protocol)
+  
+  ---
+  # IGP configuration steps
+  
+  1. Ensure there is at least one functional interface configured with an IP address on the device
+  2. Enable the routing protocol
+  3. Define networks for which the routing protocol will be active [[recommended]]
+      3.1 Use passive interface default
+      3.2 Select the interface to participate in the routing protocol
+  4. Enable authentication for the routing protocol
+  
+  
+  ---
+  
+  
   # Default route 
   
-  A route that is used to send to networks that aren't explicitly set via either dynamic or static routing
-  The default route is 0.0.0.0 with a mask of 0.0.0.0
-  **ip route 0.0.0.0   0.0.0.0**
+  * A route that is used to send traffic destined to networks that have no active route in the routing table
+  * Eliminates requiremenets of destination prefix and mask
+  * Usually configured for Internet specefic routing (with ISP)
+  * Can cause a routing loop if not configured properly [[warning]]
+    * If 2 routers are configured with default routes facing eachother
+  * The default route is 0.0.0.0 with a mask of 0.0.0.0
+    * `ip route 0.0.0.0   0.0.0.0`
   
   ---
   
@@ -147,14 +216,25 @@
       * The adjacancy table can also be viewed using `Router#show adjacency`
   
   ---
+  # Configuring interfaces participating in the routing process
   
-  # Passive interface
+  * When configuring a routing protocol, the `#network <...>` command **DOES NOT** specify the network to be advertised. 
+  * The router uses the configured address to extract the network that will be matched against it's interfaces addresses. 
+  * The routing process will take the network configuration from the interface **NOT** from the routing process's command. 
+  * All interfaces matching the network will be participating in the routing protocol:
+    * Their network advertised 
+    * They'll send and receive routing updates 
+  * If an interface's network isn't matched with the configured network, it 
+    * Will not send routing informations out of it
+    * Can receive routing information
+  * If specifying a single host address (the port address), use a wildcard mask of `0.0.0.0`
   
-  When configuring a routing protocol, the `Router(config-router)#network <...>` command **DOES NOT** specify the network to be advertised. Instead, it specifies the **network interface** with the following (host/network) address should be participating in this router process. This means that we specify the address (host/network) & the routing process should search for an interface that has an address with the same network address as the one configured & that interface will be participating in that routing process. The routing process will take the network configuration from that interface **NOT** from the command.
-  If a network isn't added with that command on that router, the corresponding interface (the one belonging to the same network) **WILL NOT** send routing informations but it **CAN** still receive routing information through it.
-  If specifying a single host address (the port address), use a wildcard mask of `0.0.0.0`
   
-  A passive interface is an interface that participates in the routing process to take the configuration of the network out of it **but** it doesn't send routing informations
+  # Passive interface 
+  
+  * A passive interface is an interface that 
+    * Has it's network advertised
+    * Doesn't send routing informations out of it
   
   
   
@@ -164,8 +244,8 @@
   
   * Wildcard mask: It's a form of mask used when configuring some routing protocols (eg: OSPF & EIGRP)
     * Calculation: 255.255.255.255 - <mask>  = <wildcard_mask>
-  * DHCP relay agent
-    * A router that has been configured to forward DHCP discover messages to a specefic destination IP address or specefic destination network
   * The bandwidth of an interface **has to be set correctly** for some calculations (QoS HWQ size for eg)
-  * If the DHCP server is on another subnet, the router's interface facing the network must be configured with `Router(config-if)#ip helper-address <ip_address>` 
+  
 '''
+tags: [
+  "CISCO"

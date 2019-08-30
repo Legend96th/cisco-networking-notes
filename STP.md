@@ -1,14 +1,14 @@
   # STP
   Spanning Tree Protocol
   
-  * Spanning tree types
-    * CST (Common Spanning Tree) [IEEE 802.1D] **(default)**
-    * PVST (Per VLAN Spanning Tree) [cisco] (same as CST)
-    * **PVST+** [cisco] (new version of PVST) 
-    * MISTP (Multiple Instances Spanning Tree Protocol)
-    * MSTP (Multiple Spanning Trees Protocol) [IEEE 802.1S]
+  * Spanning tree types (versions)
+    * CST (Common Spanning Tree) [IEEE 802.1D] 
+    * PVST (Per VLAN Spanning Tree) [cisco] 
+    * **PVST+** [cisco]  
     * RSTP (Rapid Spanning Tree Protocol) [IEEE 802.1W] 
     * **RPVST** (Rapid PVST+) [cisco]
+    * MISTP (Multiple Instances Spanning Tree Protocol) [cisco]
+    * **MSTP** (Multiple Spanning Trees Protocol) [IEEE 802.1S]
   * Types of devices
     * <non root??>
     * Root bridge: An STP topology has a single root bridge. The bridge (or switch) with the lowest bridge ID (BID) is elected as the root bridge
@@ -16,13 +16,17 @@
         * Bridge priority (0-61440), default: 32768
         * MAC address
       * The election of a root bridge is started when we don't receive BPDUs (Root Bridge not existing or went down)
+  * Port types
+    * P2P: Switch to (Switch|PC|Router)
+      * Edge-portfast: A special case that is applied only when we have **point-to-point and portfast** enabled 
+    * Shared: Switch to Hub
   * Port states
-  | Port state | Description |
-  |-|-|
-  | Root port | The port on a non-root bridge that is closest to the root bridge, in terms of cost |
-  | Designated port | The port on a network segment that is closes to the root bridge, in terms of cost |
-  | Non Designated port | Ports that block traffic, in order to preserve a loop-free L2 topology |
-  | Disabled port | A port that is administratively shut down |
+  | Port state          | Description                                                                        |
+  | ------------------- | ---------------------------------------------------------------------------------- |
+  | Root port           | The port on a non-root bridge that is closest to the root bridge, in terms of cost |
+  | Designated port     | The port on a network segment that is closes to the root bridge, in terms of cost  |
+  | Non Designated port | Ports that block traffic, in order to preserve a loop-free L2 topology             |
+  | Disabled port       | A port that is administratively shut down                                          |
    
   
   ---
@@ -95,12 +99,12 @@
   The cost of passing by a link with a
   
   
-  | Speed | Cost |
-  |-|-|
-  | 10Mb/s | 100 |
-  | 100Mb/s | 19 |
-  | 1Gb/s | 4 |
-  | 10Gb/s | 2 |
+  | Speed   | Cost |
+  | ------- | ---- |
+  | 10Mb/s  | 100  |
+  | 100Mb/s | 19   |
+  | 1Gb/s   | 4    |
+  | 10Gb/s  | 2    |
   
   ---
   
@@ -109,9 +113,16 @@
   * Determine the root bridge (using the lowest BID)
   * Asign the cost of each link (use the STP cost table)
   * Assign the Root Ports (RP)
-    * Use the cost to determine which route is with the  lowest cost to go to the Root Bridge
-      * 
-    * If 2 links have the same cost, we choose the lowest port ID [port_priority|port_number+2] that we send to (the one we go to)
+    * Based on the lowest:
+      * Cost
+      * Remote BID
+      * Remote Port priority
+    ```
+    * Use the cost to determine which route is with the lowest:
+      * Cost to go to the Root Bridge (If 2 links have the same cost, we choose the lowest )
+      * Remote BID (that we send to) (the one we go to); 
+      * Remote Port ID [port_priority|port_number+2] that we send to (the one we go to)
+    ```
   * Assign the Designated Ports (DP)
     * On the **segments** which doesn't have a RP on them, we look for the port of that segment with the least cost to go to the Root Bridge. The one with the lowest cost is considered a DP 
     * If on a segment, the 2 paths have the same cost to go to the Root Bridge, the DP is chosen based on the lowest **BID** (Bridg ID)
@@ -137,6 +148,8 @@
     * Learning 15s
     * Forwarding (as long as link is up)
   
+  
+  
   BPDU - Bridge Protocol Data Unit
   A type of packet exchanged in an STP topology that is used to determine which switch is the root bridge. The BPDU is sent by the Root Bridge & is used to determine if a route to the Root Bridge is existing
   
@@ -156,17 +169,21 @@
   ##  BPDU guard
   
   * This option has to be configured on all ports that we dont want to receive BPDU updates from (not access mode ports)
-    * eg: a port that was used with a switch & the switch got temporarly removed
+    * Stop a broadcast storm if we accidentally plug in another switch
+    * Prevent someone from changing the root bridge in the topology 
   * Should be enabled on ports with PortFast enabled
   * Causes a port to go into an error-disabled state if a BPDU is received
+  * Can be enabled:
+    * Globally: Will be automatically applied to all ports with PortFast enabled on them
+    * On interface: Manually enable BPDU guard on an interface
   
   
   
   ## STP root guard 
   
-  Guards the root bridge ports (the ports on the root connecting to the other switches) & shuts them down in case someone wants to take control & become root 
+  Guards the root bridge ports (the ports on the root connecting to the other switches) & shuts them down in case if someone wants to take control and become the root bridge. It guards the switch that is currently root from being stolen
   Apply this on the root switch ports attached with the other switches
-  Guards the switch that is currenty root from being stolen
+  
   
   ---
   
@@ -178,7 +195,10 @@
   If the priority is the same between the 2 ports, the port number of **the facing port** is checked. The lower number is the highest in priority 
   
   
-  * Check the STP mode 
+  ---
+  # Configuration
+  
+  * Check the STP mode | BPDU guard globally
   ```
   Switch#show spanning-tree summary
   ```

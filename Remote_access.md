@@ -1,6 +1,11 @@
   # Remote access
   
-  
+  * TTY (Teletype) line: A software link between the person issuing the commands and the CPU
+  * TTY line types:
+    * CTY (Console Teletype): Console port
+    * TTY: Provides CTY alike access to multiple devices from a single one (one router used to access other equipments)
+    * VTY: Virtual TTY used for remote access
+    * Aux: Used to connect a modem to an equipment to remotely dial-up and configure it (used as a backup)
   * Check enabled protocols:
     * `show line vty <num>`
     * Check "Allowed <input|output> transports are ..."
@@ -19,56 +24,34 @@
   ```
   ---
   
-  # SSH
-  Secure Shell
+  # Telnet
   
-  SSH uses an RSA key
-  * 512 -> 767 v1
-  * 768 -> ~ v2
-  
-  To activate SSH 
-  * Add a hostname
-  * Add a domain name
-  * Add an RSA key
-  * Set the SSH version to version 2
-  * Add users with privilages & passwords
-  * Add a line vty
-  * Choose SSH as an input transport method
-  * Set the username & password database to local
-  
-  ```
-  hostname sw1
-  ip domaine-name icnd2.com
-  crypto key generate rsa  :: 1024
-  username sofiane privilege 15 secret passWord
-  line vty 0 4
-  transport input SSH 
-  login local
-  
-  
-  Router(config)#hostname RW0
-  RW0(config)#ip domain-name icnd2.com
-  RW0(config)#crypto key generate RSA
-  
-    How many bits in the modulus [512]: 1024
-  
-  RW0(config)#ip ssh version 2
-  RW0(config)#username hossam password cisco
-  RW0(config)#username hossam privilege 15 secret 123
-  RW0(config)#username said privilege 7 secret 456
-  RW0(config)#line vty 0 4
-  RW0(config-line)#transport input ssh
-  RW0(config-line)#login local
-  
-  # On PC
-  
-  C:\\>ssh -l hossam 10.0.0.1
-  ```
-  
+  * Enabled by default when setting 
+    * A login password on the "line vty"
+    * An enable password
+  * Exchanges data (commands and results) in clear text
   
   ---
   
-  # Telnet
+  # SSH
+  Secure Shell
   
-  Enabled by setting a login password on the "line vty" & setting an enable password
+  * SSH uses an RSA key to encrypt data
+    * SSH V1: n = 512 -> 767
+    * SSH V2: n = 768 -> ~~~ 
+  * Requires IOS images that support:  
+    * SSH V1: IPSec DES
+    * SSH V2: IPSec 3DE
+    * *Typically look for a "k9" in IOS image name*
+    
+  * SSH server configuration:
+    * Add a hostname
+    * Add a domain name
+    * Add an RSA key
+    * Set the SSH version to version 2
+    * Add users with privilages & passwords
+    * Add a line vty
+    * Choose SSH as an input transport method
+    * Set the username & password database to local
+  
 '''

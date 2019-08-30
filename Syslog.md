@@ -1,5 +1,5 @@
   # Syslog
-  
+  System logging
   
   * Logging levels
     0. Emergencies: Severe conditions that render a system unusable
@@ -11,7 +11,7 @@
     6. Information: Information about a normal system operation
     7. Debugging: Very detailed information about system operation, typically used for troubleshooting
   * The lower the level, the more severe the situation of the log message is
-  * It's common to start logging at level 4 down to level 0
+  * It's common to start logging at level 4 down to level 0 [[recommended]]
   * Informations in a log message 
     * Sequence number
     * Timestamp
@@ -19,12 +19,30 @@
     * Severity level
     * Mnemonic: An abreviation description of the log message
     * Description: A more detailed description of the log message
+  
+  
   ---
+  
   # Configuration
+  
+  * Show console messages on console login
+  ```
+  Router(config)#logging console
+  ```
   
   * Show console messages on remote access logins
   ```
   Router#terminal monitor
+  ```
+  
+  * Enable logging to buffer
+  ```
+  Router(config)#logging buffer
+  ```
+  
+  * Show active loggings
+  ```
+  Router#show logging
   ```
   
   * Configure an equipment to use a syslog server
@@ -54,3 +72,5 @@
   
   
 '''
+tags: [
+  "CISCO"
