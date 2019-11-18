@@ -4,7 +4,7 @@
   * Defines format of data to be sent on the WAN links
   * Also reffered as encapsulation
   * Technologies:
-    * Circuit switching
+    * Circuit switching: A circuit-switched network is one that establishes a dedicated circuit (or channel) between nodes and terminals before the users may communicate
       * HDLC
       * PPP
     * Packet switching
@@ -86,24 +86,36 @@
   # 1.Dedicated circuit switching (Leased line)
   Site to site private connexion
   
+  
+  
   * Digital Speed (DS)
     * DS0: 64Kbps
     * DS1: 
-      * T1 (USA): 1.54 Mbps
+      * T1 (USA): 1.544 Mbps
       * E1 (Europe): 2.048 Mbps
     * DS2
     * DS3: 
-      * T3 (USA): 45Mbps
-      * E3 (Europe): 34Mbps
+      * T3 (USA): 43.7Mbps
+      * E3 (Europe): 34.368Mbps
     * STM1: 155Mbps
     * STM64: 10Gbps 
     * STM256: 40Gbps
   STM is used by ISP to connect to the international backbone
   
+  * Advantages: 
+    * Simplicity - Point-to-point communication links require minimal expertise to install and maintain.
+    * Quality - Point-to-point communication links usually offer high service quality, if they have adequate bandwidth. The dedicated capacity removes latency or jitter between the endpoints.
+    * Availability - Constant availability is essential for some applications, such as e-commerce. Point-to-point communication links provide permanent, dedicated capacity which is required for VoIP or Video over IP.
+  * Disadvantages
+    * Cost - Point-to-point links are generally the most expensive type of WAN access. The cost of leased line solutions can become significant when they are used to connect many sites over increasing distances. In addition, each endpoint requires an interface on the router, which increases equipment costs.
+    * Limited flexibility - WAN traffic is often variable, and leased lines have a fixed capacity, so that the bandwidth of the line seldom matches the need exactly. Any change to the leased line generally requires a site visit by ISP personnel to adjust capacity.
+  
+  
+  
   ---
   
   # 2.On demand circuit switching (Asynchronous serial)
-  
+  Circuit-switched WAN technologies are the public switched telephone network (PSTN) and the Integrated Services Digital Network (ISDN). 
   * Dial-up: (the old school method) use either phone or data (internet) at one time only
     * 64Kbps
   * ISDN: Can use voice (phone) and data (internet) at the same time or use voice subscription to send data (via the audio channel) & get double speed (64Kbps + 64Kbps)

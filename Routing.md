@@ -1,4 +1,3 @@
-  
   # Routing
   
   * Routers stop broadcasts from crossing networks
@@ -39,10 +38,13 @@
   * Locally significant value; not distributed to other routers
   
   
+  
   | Protocol              | Administrative Distance (AD) |
   | --------------------- | ---------------------------- |
   | Connected             | 0                            |
   | Static route          | 1                            |
+  | DHCP Default route    | 2                            |
+  | Summerized EIGRP      | 5                            |
   | eBGP                  | 20                           |
   | EIGRP                 | 90                           |
   | OSPF                  | 110                          |
@@ -62,22 +64,6 @@
   * IGPs use metric for best path calculation
   * Lower value is preferred
   * Depends on the routing protocol
-  
-  ---
-  
-  # Cost table
-  **Memorize this** 
-  The cost of passing by a link 
-  
-  
-  | Speed   | Cost |
-  | ------- | ---- |
-  | 1Mb/s   | 100  |
-  | 100Mb/s | 19   |
-  | 1Gb/s   | 4    |
-  | 10Gb/s  | 2    |
-  
-  
   
   ---
   
@@ -198,7 +184,7 @@
   
   ---
   
-  # Packet forwarding
+  # Packet forwarding [[important]]
   
   * A router contains these components
     * CPU
@@ -210,10 +196,16 @@
     * Data plane
   * Methods of forwarding packets
     * **Process switching**: The CPU get's involved with every forwarded packet
+      * All packets will show with `debug ip packet`
     * **Fast switching**: The route cache is checked to see if a packet destined to a similar network have been sent before, if so the cached data is used. If this is the first packet being sent to this network, the CPU is queried to make a routing decision & stores that in the route cache for futur use.
-    * **CISCO Express Forwarding (CEF)**: The CPU populates the routing table to the FIB while the adjancy table is filled with L2 data of neighbors, combining the two the router can rapidly construct the L2/3 headers it needs to make the routing decision 
+      * Disable fast switching `Router(conf)#no ip route-cach`; disabling it rolls back to Process switching
+      * Only first packet will show with `debug ip packet`
+    * **CISCO Express Forwarding (CEF)** (default): *Pre-prepared table*. The CPU populates the **routing table to the FIB** while the **adjancy table is filled with L2** data of neighbors, combining the two the router can rapidly construct the L2/3 headers it needs to make the routing decision 
       * The CEF table can be viewed using `Router#show ip cef`. This command shows us networks, their next hops & egress interfaces
+      * Enable CEF `Route(conf)#ip cef`; disabling it rolls back to Fast switching.
       * The adjacancy table can also be viewed using `Router#show adjacency`
+      * **Locally generated traffic will never be CEFed** [[important]]
+      * **CEFed packets won't show in the `debug ip packet` output because they are not trated by the CPU** [[warning]]
   
   ---
   # Configuring interfaces participating in the routing process
@@ -247,5 +239,3 @@
   * The bandwidth of an interface **has to be set correctly** for some calculations (QoS HWQ size for eg)
   
 '''
-tags: [
-  "CISCO"

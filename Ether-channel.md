@@ -20,7 +20,7 @@
     * Duplex
     * VLAN assignment
   * EtherChannel guard
-    * A feature that can detect mismatched channel parameters between switches, generate an error message, &nd place a poirt into an error disabled state
+    * A feature that can detect mismatched channel parameters between switches, generate an error message, and place a port into an error disabled state
   * Types of etherchannels
     * Layer 2 EtherChannel
       * A connection make up of a logical grouping of ports into a virtual interface that is configurable as a Layer 2 interface
@@ -34,18 +34,18 @@
   ## Etherchannel formation
   
   
-  | LACP | On | Passive | Active |
-  |-|-|-|-|
-  | On | Y | X | X |
-  | Passive | X | X | Y |
-  | Active | X | Y | Y |
+  | LACP    | On  | Passive | Active |
+  | ------- | --- | ------- | ------ |
+  | On      | Y   | X       | X      |
+  | Passive | X   | X       | Y      |
+  | Active  | X   | Y       | Y      |
   
   
-  | PAGP | On | Auto | Desirable |
-  |-|-|-|-|
-  | On | Y | X | X |
-  | Auto | X | X | Y |
-  | Desirable | X | Y | Y |
+  | PAGP      | On  | Auto | Desirable |
+  | --------- | --- | ---- | --------- |
+  | On        | Y   | X    | X         |
+  | Auto      | X   | X    | Y         |
+  | Desirable | X   | Y    | Y         |
   
   *Types:*
   * On: This interface is an etherchannel (not initiating but accepting if received a request or if the facing interface is also set to on)
@@ -53,8 +53,33 @@
   * Desirable: Initiate & accept a received communication
   
   ---
+  # Loadbalancing
+  
+  
+  | Number of Ports in the EtherChannel | Load Balancing  |
+  | ----------------------------------- | --------------- |
+  | 8                                   | 1:1:1:1:1:1:1:1 |
+  | 7                                   | 2:1:1:1:1:1:1   |
+  | 6                                   | 2:2:1:1:1:1     |
+  | 5                                   | 2:2:2:1:1       |
+  | 4                                   | 2:2:2:2         |
+  | 3                                   | 3:3:2           |
+  | 2                                   | 4:4             |
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ---
   
   ## Activation
+  
+  **ALWAYS disable the ports before activating etherchannel**
   
   ### L2 EtherChannel
   * Select the interfaces (**Maximum of 8 interfaces to work**)
@@ -117,3 +142,4 @@
     src-ip       Src IP Addr
     src-mac      Src Mac Addr
   ```
+'''

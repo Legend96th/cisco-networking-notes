@@ -1,7 +1,7 @@
 content: '''
   # MPLS
   Multiprotocol Label Switching
-  
+   
   * Makes fowarding decisions based on a 20-bit label in a 32-bit header
   * Makes forwarding decisions based on labels instead of an IP address
   * Traffic sepparation using different labels

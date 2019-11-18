@@ -56,6 +56,16 @@
   
   
   ---
+  # Native VLAN
+  
+  * By default all ports are set to the native VLAN 1 
+  * It is used to send un-tagged traffic on a trunk link
+    * Switch originated traffic
+    * Pass-through devices
+    * Virtualized servers
+  
+  
+  ---
   
   # Voice VLAN
   
@@ -188,6 +198,7 @@
     * To avoid having problems, reset the CRN 
   * VTP password and domain are stored in flash:vlan.dat [[key topic]]
   * `service pass-ecrypt` only encrypts passwords stored in running-config => it won't encrypt the VTP password
+  * If no domain name is configured, the first domain that is received will be set to the VTP domain [[warning]]
   * A switch ignores and discards an update if:
     * VTP domain is different
     * Password is different
